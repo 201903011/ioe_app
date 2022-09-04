@@ -10,6 +10,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'history.dart';
 
 class MyDrawer extends StatefulWidget {
+  final String url;
+  final String name;
+  final String email;
+
+  const MyDrawer(
+      {super.key, required this.url, required this.name, required this.email});
+
   @override
   State<MyDrawer> createState() => _MyDrawerState();
 }
@@ -19,8 +26,9 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final imageUrl =
-        "https://avatars.githubusercontent.com/u/72931833?s=96&v=4";
+    final imageUrl = (widget.url == "" || widget.url == null)
+        ? "https://avatars.githubusercontent.com/u/72931833?s=96&v=4"
+        : widget.url;
     return Drawer(
       child: Container(
         color: Color.fromARGB(202, 0, 0, 0),
@@ -32,8 +40,8 @@ class _MyDrawerState extends State<MyDrawer> {
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.black),
                 margin: EdgeInsets.zero,
-                accountName: Text("Rahul Gaikwad"),
-                accountEmail: Text("rahul@gmail.com"),
+                accountName: Text(widget.name),
+                accountEmail: Text(widget.email),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(imageUrl),
                 ),

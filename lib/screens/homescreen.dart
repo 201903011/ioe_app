@@ -134,7 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        email: user.email,
+        name: user.Name,
+        url: user.url,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

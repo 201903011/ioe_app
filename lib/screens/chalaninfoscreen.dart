@@ -212,6 +212,8 @@ class _ChalInfoScreenState extends State<ChalInfoScreen> {
               Container(
                 height: 200,
                 decoration: BoxDecoration(color: Colors.black),
+                child: Image.network(widget.chal.url ??
+                    "https://avatars.githubusercontent.com/u/72931833?s=96&v=4"),
               )
             ],
           ),
