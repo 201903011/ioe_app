@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:ioe_app/MyStyles.dart';
 import 'package:ioe_app/models/chalan.dart';
-import 'package:ioe_app/models/vehicles.dart';
+import 'package:ioe_app/screens/homescreen.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class ChalInfoScreen extends StatefulWidget {
   final Chalan chal;
@@ -228,20 +229,34 @@ class _ChalInfoScreenState extends State<ChalInfoScreen> {
                   Spacer(),
                   InkWell(
                     onTap: () async {
-                      print("paid");
-
                       try {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text("paid")));
+                        var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+                        await db.open();
+                        var chalanCollection = db.collection('chalan');
+                        var x = widget.chal.toJson();
+                        chalanCollection.updateOne(widget.chal.toMap(),
+                            mongo.modify.set('status', 'paid'));
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("paid")));
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
                       } catch (e) {
+                        print(e);
+                        // ignore: prefer_const_constructors
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("There is some problem try again")));
+                            content:
+                                const Text("There is some problem try again")));
                       } finally {}
                     },
+                    // ignore: prefer_const_constructors
                     child: Icon(
                       Icons.payment,
                       size: 30,
-                      color: Color.fromARGB(255, 7, 49, 189),
+                      color: const Color.fromARGB(255, 7, 49, 189),
                     ),
                   ),
                 ],

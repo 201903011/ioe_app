@@ -37,10 +37,10 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
     //   recipients: [us1.email],
     //   bcc: [],
     //   cc: [],
-    //   attachmentPaths: null,
+    //   attachmentPaths: [],
     //   isHTML: false,
     // );
-    // print(email);
+    // print(email.recipients);
     // String platformResponse;
 
     // try {
