@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:ioe_app/MyStyles.dart';
 import 'package:ioe_app/models/chalan.dart';
@@ -8,7 +6,6 @@ import 'package:mongo_dart/mongo_dart.dart' as mongo;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
-import '../models/vehicles.dart';
 
 class ChalanScreen extends StatefulWidget {
   const ChalanScreen({Key? key}) : super(key: key);
@@ -41,7 +38,10 @@ class _ChalanScreenState extends State<ChalanScreen> {
     // print(user);
 
     List<Chalan> chal1 = <Chalan>[];
-    var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+    mongo.Db db;
+
+    db = await mongo.Db.create(
+        'mongodb+srv://Vinod:PLraOmofL8zFe2yr@cluster0.gbcff.mongodb.net/AChalan?retryWrites=true&w=majority');
     await db.open();
     var chalanCollection = db.collection('chalan');
 

@@ -32,8 +32,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final SharedPreferences pref = await _prefs;
     s = pref.getString("user")!;
     User u1 = User.fromJson(s);
+
     List<Vehicle> vl = <Vehicle>[];
-    var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+    mongo.Db db;
+
+    db = await mongo.Db.create(
+        'mongodb+srv://Vinod:PLraOmofL8zFe2yr@cluster0.gbcff.mongodb.net/AChalan?retryWrites=true&w=majority');
     await db.open();
     var vehicleCollection = db.collection('vehicles');
     var x = await vehicleCollection.find(mongo.where.eq('phone', u1.phone));

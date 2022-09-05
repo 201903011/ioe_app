@@ -232,7 +232,9 @@ class _ChalInfoScreenState extends State<ChalInfoScreen> {
                   InkWell(
                     onTap: () async {
                       try {
-                        var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+                        mongo.Db db;
+                        db = await mongo.Db.create(
+                            'mongodb+srv://Vinod:PLraOmofL8zFe2yr@cluster0.gbcff.mongodb.net/AChalan?retryWrites=true&w=majority');
                         await db.open();
                         var chalanCollection = db.collection('chalan');
                         var x = widget.chal.toJson();

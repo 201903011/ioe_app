@@ -27,7 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
     bool valid = false;
 
     if (_formkey.currentState!.validate()) {
-      var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+      mongo.Db db;
+
+      db = await mongo.Db.create(
+          'mongodb+srv://Vinod:PLraOmofL8zFe2yr@cluster0.gbcff.mongodb.net/AChalan?retryWrites=true&w=majority');
       await db.open();
       var usersCollection = db.collection('users');
       var x = await usersCollection.findOne(mongo.where.eq('phone', number));
@@ -42,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         changebutton = true;
       });
-      await Future.delayed(Duration(seconds: 1));
+
       print(number);
       final otp = OTP.generateTOTPCodeString(
           "secret", DateTime.now().millisecondsSinceEpoch);
