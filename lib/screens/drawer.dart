@@ -111,7 +111,7 @@ class _MyDrawerState extends State<MyDrawer> {
               },
               child: ListTile(
                 leading: Icon(
-                  CupertinoIcons.money_dollar,
+                  Icons.currency_rupee,
                   color: Colors.white,
                 ),
                 title: Text(
