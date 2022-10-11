@@ -69,6 +69,13 @@ class _ChalanScreenState extends State<ChalanScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh))
+        ],
       ),
       body: ListView.builder(
         itemCount: chalan.length,

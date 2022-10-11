@@ -58,6 +58,13 @@ class _VehicleScreenState extends State<VehicleScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -78,7 +85,20 @@ class _VehicleScreenState extends State<VehicleScreen> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(50, 158, 158, 158),
+                    gradient: index % 3 == 2
+                        ? LinearGradient(colors: [
+                            Color.fromARGB(255, 0, 4, 40),
+                            Color.fromARGB(255, 12, 186, 186),
+                          ], begin: Alignment.centerLeft)
+                        : index % 3 == 1
+                            ? LinearGradient(colors: [
+                                Color.fromARGB(255, 66, 34, 82),
+                                Color.fromARGB(255, 220, 36, 48),
+                              ], begin: Alignment.centerLeft)
+                            : LinearGradient(colors: [
+                                Color.fromARGB(255, 31, 16, 44),
+                                Color.fromARGB(255, 115, 75, 109),
+                              ], begin: Alignment.centerLeft),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
@@ -120,15 +140,16 @@ class _VehicleScreenState extends State<VehicleScreen> {
                             padding: const EdgeInsets.only(bottom: 16.0),
                             child: Text(
                               veh[index].model,
-                              style: MyStyle.header1(context, Colors.black),
+                              style: MyStyle.header1(context, Colors.white),
                             ),
                           ),
                           Text(
                             veh[index].vnumber,
-                            style: MyStyle.header2(context, Colors.black),
+                            style: MyStyle.header2(context, Colors.white),
                           ),
                           Text(
                             veh[index].fuel,
+                            style: TextStyle(color: Colors.white),
                           ),
                         ],
                       )

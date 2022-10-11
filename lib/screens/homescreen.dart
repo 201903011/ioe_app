@@ -20,47 +20,103 @@ final List<String> Info = [
   "National Health Mission",
   "National Pension Scheme",
 ];
-final List<Widget> imageSliders = imgList
-    .map((item) => Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.asset(item, fit: BoxFit.cover, width: 1000.0),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          '',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+var curr = 0;
+final List<Widget> imageSliders = imgList.map((item) {
+  curr = curr + 1;
+  return Container(
+    child: Container(
+      margin: EdgeInsets.all(5.0),
+      child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          child: Stack(
+            children: <Widget>[
+              Image.asset(item, fit: BoxFit.cover, width: 1000.0),
+              Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    gradient: curr % 3 == 2
+                        ? LinearGradient(colors: [
+                            Color.fromARGB(190, 0, 4, 40),
+                            Color.fromARGB(190, 12, 186, 186),
+                          ], begin: Alignment.centerLeft)
+                        : curr % 3 == 1
+                            ? LinearGradient(colors: [
+                                Color.fromARGB(190, 66, 34, 82),
+                                Color.fromARGB(190, 220, 36, 48),
+                              ], begin: Alignment.centerLeft)
+                            : LinearGradient(colors: [
+                                Color.fromARGB(190, 31, 16, 44),
+                                Color.fromARGB(190, 115, 75, 109),
+                              ], begin: Alignment.centerLeft),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                  child: Text(
+                    '',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                )),
-          ),
-        ))
-    .toList();
+                  ),
+                ),
+              ),
+            ],
+          )),
+    ),
+  );
+}).toList();
+//  Container(
+//       child: Container(
+//         margin: EdgeInsets.all(5.0),
+//         child: ClipRRect(
+//             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//             child: Stack(
+//               children: <Widget>[
+//                 Image.asset(item, fit: BoxFit.cover, width: 1000.0),
+//                 Positioned(
+//                   bottom: 0.0,
+//                   left: 0.0,
+//                   right: 0.0,
+//                   child: Container(
+//                     height: 200,
+//                     decoration: BoxDecoration(
+//                       gradient: curr % 3 == 2
+//                                 ? LinearGradient(colors: [
+//                                     Color.fromARGB(255, 0, 4, 40),
+//                                     Color.fromARGB(255, 12, 186, 186),
+//                                   ], begin: Alignment.centerLeft)
+//                                 : curr % 3 == 1
+//                                     ? LinearGradient(colors: [
+//                                         Color.fromARGB(255, 66, 34, 82),
+//                                         Color.fromARGB(255, 220, 36, 48),
+//                                       ], begin: Alignment.centerLeft)
+//                                     : LinearGradient(colors: [
+//                                         Color.fromARGB(255, 31, 16, 44),
+//                                         Color.fromARGB(255, 115, 75, 109),
+//                                       ], begin: Alignment.centerLeft),
+//                     ),
+//                     padding: EdgeInsets.symmetric(
+//                         vertical: 10.0, horizontal: 20.0),
+//                     child: Text(
+//                       '',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontSize: 20.0,
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             )),
+//       ),
+//     ))
+// .toList();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -75,11 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<bool> log_info;
   late String s;
   List<Ic1> ic = <Ic1>[
-    Ic1(const Icon(Icons.car_repair, size: 35), "Repair"),
-    Ic1(const Icon(Icons.car_rental, size: 35), "Rent"),
-    Ic1(const Icon(Icons.design_services, size: 35), "Service"),
-    Ic1(const Icon(Icons.car_crash_sharp, size: 35), "Insurance"),
-    Ic1(const Icon(Icons.account_balance, size: 35), "Maintain"),
+    Ic1(const Icon(Icons.car_repair, size: 35, color: Colors.white), "Repair"),
+    Ic1(const Icon(Icons.car_rental, size: 35, color: Colors.white), "Rent"),
+    Ic1(const Icon(Icons.design_services, size: 35, color: Colors.white),
+        "Service"),
+    Ic1(const Icon(Icons.car_crash_sharp, size: 35, color: Colors.white),
+        "Insurance"),
+    Ic1(const Icon(Icons.account_balance, size: 35, color: Colors.white),
+        "Maintain"),
   ];
   User user = User("", "", "", "", "", "", "");
   @override
@@ -172,7 +231,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 70,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(59, 158, 158, 158),
+                                gradient: index % 3 == 2
+                                    ? LinearGradient(colors: [
+                                        Color.fromARGB(255, 0, 4, 40),
+                                        Color.fromARGB(255, 12, 186, 186),
+                                      ], begin: Alignment.centerLeft)
+                                    : index % 3 == 1
+                                        ? LinearGradient(colors: [
+                                            Color.fromARGB(255, 66, 34, 82),
+                                            Color.fromARGB(255, 220, 36, 48),
+                                          ], begin: Alignment.centerLeft)
+                                        : LinearGradient(colors: [
+                                            Color.fromARGB(255, 31, 16, 44),
+                                            Color.fromARGB(255, 115, 75, 109),
+                                          ], begin: Alignment.centerLeft),
                                 shape: BoxShape.circle),
                             child: ic[index].icn,
                           ),
@@ -214,7 +286,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {},
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(50, 158, 158, 158),
+                          gradient: index % 3 == 2
+                              ? LinearGradient(colors: [
+                                  Color.fromARGB(255, 0, 4, 40),
+                                  Color.fromARGB(255, 12, 186, 186),
+                                ], begin: Alignment.centerLeft)
+                              : index % 3 == 1
+                                  ? LinearGradient(colors: [
+                                      Color.fromARGB(255, 66, 34, 82),
+                                      Color.fromARGB(255, 220, 36, 48),
+                                    ], begin: Alignment.centerLeft)
+                                  : LinearGradient(colors: [
+                                      Color.fromARGB(255, 31, 16, 44),
+                                      Color.fromARGB(255, 115, 75, 109),
+                                    ], begin: Alignment.centerLeft),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Row(
@@ -250,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Info[index],
                                       overflow: TextOverflow.ellipsis,
                                       style: MyStyle.header1(
-                                          context, Colors.black),
+                                          context, Colors.white),
                                     ),
                                   ),
                                 ),
@@ -259,6 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "see all",
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ],
                             )
