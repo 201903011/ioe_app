@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ioe_app/constant.dart';
 
 import 'package:otp/otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     bool valid = false;
 
     if (_formkey.currentState!.validate()) {
-      var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+      var db = await mongo.Db(dbConn);
       await db.open();
       var usersCollection = db.collection('users');
       var x = await usersCollection.findOne(mongo.where.eq('phone', number));
@@ -59,6 +60,17 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         changebutton = false;
       });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerifiedScreen(
+            number: number,
+            otp: "999999",
+            user: "",
+          ),
+        ),
+      );
     }
 
     // pref.setBool('loggedInfo', true);

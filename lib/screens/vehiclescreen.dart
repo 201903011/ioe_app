@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ioe_app/MyStyles.dart';
+import 'package:ioe_app/constant.dart';
 import 'package:ioe_app/screens/vehiclesinformation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
@@ -32,7 +33,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
     s = pref.getString("user")!;
     User u1 = User.fromJson(s);
     List<Vehicle> vl = <Vehicle>[];
-    var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+    var db = await mongo.Db(dbConn);
     await db.open();
     var vehicleCollection = db.collection('vehicles');
     var x = await vehicleCollection.find(mongo.where.eq('phone', u1.phone));

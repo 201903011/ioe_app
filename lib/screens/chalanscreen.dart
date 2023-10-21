@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:ioe_app/MyStyles.dart';
+import 'package:ioe_app/constant.dart';
 import 'package:ioe_app/models/chalan.dart';
 import 'package:ioe_app/screens/chalaninfoscreen.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
@@ -41,7 +42,8 @@ class _ChalanScreenState extends State<ChalanScreen> {
     // print(user);
 
     List<Chalan> chal1 = <Chalan>[];
-    var db = mongo.Db('mongodb://10.0.2.2:27017/AChalan');
+    var db = await mongo.Db(dbConn);
+
     await db.open();
     var chalanCollection = db.collection('chalan');
 
