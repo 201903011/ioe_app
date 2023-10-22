@@ -235,10 +235,10 @@ class _ChalInfoScreenState extends State<ChalInfoScreen> {
                       try {
                         var db = await mongo.Db.create(dbConn);
                         await db.open();
-                        var chalanCollection = db.collection('chalan');
-                        var x = widget.chal.toJson();
-                        chalanCollection.updateOne(widget.chal.toMap(),
-                            mongo.modify.set('status', 'paid'));
+                        var chalanCollection = await db.collection('chalan');
+                        var x = await widget.chal.toJson();
+                        await chalanCollection.updateOne(widget.chal.toMap(),
+                            await mongo.modify.set('status', 'paid'));
 
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("paid")));

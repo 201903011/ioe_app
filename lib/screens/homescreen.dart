@@ -85,15 +85,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Map mymap = await userget();
+      // setState(() {});
+      setState(() {
+        user = mymap["user"];
+      });
+    });
     userget();
   }
 
-  void userget() async {
+  Future<Map> userget() async {
     final SharedPreferences pref = await _prefs;
     s = pref.getString("user")!;
-    user = User.fromJson(s);
-    print(user);
-    setState(() {});
+    User user1 = User.fromJson(s);
+    print(user1);
+    // setState(() {});
+    return {"user": user1};
   }
 
   Widget build(BuildContext context) {

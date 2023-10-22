@@ -28,41 +28,49 @@ class _ChalanScreenState extends State<ChalanScreen> {
   @override
   void initState() {
     super.initState();
-    userget();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Map mymap = await userget();
+      // setState(() {});
+      setState(() {
+        user = mymap["user"];
+        chalan = mymap["chalan"];
+      });
+    });
   }
 
   void getChalans(String ph) async {
     // chalan = List.from().map<Chalan>((item) => Chalan.fromMap(item)).toList();
   }
 
-  void userget() async {
+  Future<Map> userget() async {
     final SharedPreferences pref = await _prefs;
-    s = pref.getString("user")!;
-    User u1 = User.fromJson(s);
+    s = await pref.getString("user")!;
+    User u1 = await User.fromJson(s);
     // print(user);
 
     List<Chalan> chal1 = <Chalan>[];
     var db = await mongo.Db.create(dbConn);
 
     await db.open();
-    var chalanCollection = db.collection('chalan');
-
+    var chalanCollection = await db.collection('chalan');
+    print(u1.phone);
     var x = await chalanCollection.find(mongo.where
         .eq('phone', u1.phone)
         .and(mongo.where.eq('status', 'unpaid')));
-    print(u1.phone);
-    x.forEach((element) {
+
+    await x.forEach((element) {
       Chalan ch;
       ch = Chalan.fromMap(element);
       chal1.add(ch);
-      print(ch);
+      print("ch");
     });
-    print(chalan);
+    print(chal1);
 
-    setState(() {
-      user = u1;
-      chalan = chal1;
-    });
+    // setState(() {
+    //   user = u1;
+    //   chalan = chal1;
+    // });
+    return {"user": u1, "chalan": chal1};
   }
 
   Widget build(BuildContext context) {

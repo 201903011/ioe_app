@@ -38,8 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<Map> userget() async {
     final SharedPreferences pref = await _prefs;
-    s = pref.getString("user")!;
-    User u1 = User.fromJson(s);
+    s = await pref.getString("user")!;
+    User u1 = await User.fromJson(s);
     List<Vehicle> vl = <Vehicle>[];
     var db = await mongo.Db.create(dbConn);
 
@@ -86,6 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(50)),
+                      child: user.url != "" && user.url != null
+                          ? Image.network(user.url)
+                          : Container(),
                     ),
                   ),
                   SizedBox(
