@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     s = pref.getString("user")!;
     User u1 = User.fromJson(s);
     List<Vehicle> vl = <Vehicle>[];
-    var db = await mongo.Db(dbConn);
+    var db = await mongo.Db.create(dbConn);
 
     await db.open();
     var vehicleCollection = db.collection('vehicles');

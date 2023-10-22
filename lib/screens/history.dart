@@ -38,7 +38,7 @@ class _HistoryState extends State<History> {
     // print(user);
 
     List<Chalan> chal1 = <Chalan>[];
-    var db = await mongo.Db(dbConn);
+    var db = await mongo.Db.create(dbConn);
 
     await db.open();
     var chalanCollection = db.collection('chalan');

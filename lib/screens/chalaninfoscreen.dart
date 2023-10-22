@@ -233,7 +233,7 @@ class _ChalInfoScreenState extends State<ChalInfoScreen> {
                   InkWell(
                     onTap: () async {
                       try {
-                        var db = await mongo.Db(dbConn);
+                        var db = await mongo.Db.create(dbConn);
                         await db.open();
                         var chalanCollection = db.collection('chalan');
                         var x = widget.chal.toJson();

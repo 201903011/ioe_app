@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     bool valid = false;
 
     if (_formkey.currentState!.validate()) {
-      var db = await mongo.Db(dbConn);
+      var db = await mongo.Db.create(dbConn);
       await db.open();
       var usersCollection = db.collection('users');
       var x = await usersCollection.findOne(mongo.where.eq('phone', number));
@@ -61,16 +61,16 @@ class _LoginScreenState extends State<LoginScreen> {
         changebutton = false;
       });
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerifiedScreen(
-            number: number,
-            otp: "999999",
-            user: "",
-          ),
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => VerifiedScreen(
+      //       number: number,
+      //       otp: "999999",
+      //       user: "",
+      //     ),
+      //   ),
+      // );
     }
 
     // pref.setBool('loggedInfo', true);

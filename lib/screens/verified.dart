@@ -110,8 +110,9 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
                     final SharedPreferences pref = await _prefs;
                     pref.setBool("loggedInfo", true);
                     if (widget.user != null) {
-                      pref.setString("user", widget.user);
+                      await pref.setString("user", widget.user);
                     }
+
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(

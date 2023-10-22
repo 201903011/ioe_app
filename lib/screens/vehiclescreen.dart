@@ -33,7 +33,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
     s = pref.getString("user")!;
     User u1 = User.fromJson(s);
     List<Vehicle> vl = <Vehicle>[];
-    var db = await mongo.Db(dbConn);
+    var db = await mongo.Db.create(dbConn);
     await db.open();
     var vehicleCollection = db.collection('vehicles');
     var x = await vehicleCollection.find(mongo.where.eq('phone', u1.phone));
