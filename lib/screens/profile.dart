@@ -26,10 +26,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    userget();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Map mymap = await userget();
+      // setState(() {});
+      setState(() {
+        user = mymap["user"];
+        veh = mymap["vehicle"];
+      });
+    });
   }
 
-  void userget() async {
+  Future<Map> userget() async {
     final SharedPreferences pref = await _prefs;
     s = pref.getString("user")!;
     User u1 = User.fromJson(s);
@@ -37,18 +44,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var db = await mongo.Db.create(dbConn);
 
     await db.open();
-    var vehicleCollection = db.collection('vehicles');
+    var vehicleCollection = await db.collection('vehicles');
     var x = await vehicleCollection.find(mongo.where.eq('phone', u1.phone));
-    x.forEach((element) {
+    await x.forEach((element) {
       Vehicle vh;
       vh = Vehicle.fromMap(element);
       vl.add(vh);
+      print(vh);
     });
-    print(user);
-    setState(() {
-      user = u1;
-      veh = vl;
-    });
+
+    // Future<List<Vehicle>> toaddlist = x.map((e) => Vehicle.fromMap(e)).toList();
+
+    print(u1);
+    print(x);
+    print(vl);
+
+    return {"user": u1, "vehicle": vl};
   }
 
   Widget build(BuildContext context) {
